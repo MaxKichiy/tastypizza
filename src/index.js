@@ -4,5 +4,11 @@ import ReactDOM from 'react-dom';
 import './scss/app.scss';
 
 import App from './App';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);

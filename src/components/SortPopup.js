@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 function SortPopup(props) {
   const [visiblePopup, setVisiblePopup] = useState(false);
-  const [activeItem, setactiveItem] = useState(0);
+  const [activeItem, setActiveItem] = useState(0);
   const sortRef = useRef();
   const activeLabel = props.items[activeItem];
 
@@ -11,7 +11,7 @@ function SortPopup(props) {
   }, []);
 
   const changeActiveFilter = (index) => {
-    setactiveItem(index);
+    setActiveItem(index);
     setVisiblePopup(false);
   };
   const toggleVisiblePopup = () => {
@@ -28,6 +28,7 @@ function SortPopup(props) {
     <div ref={sortRef} className='sort'>
       <div className='sort__label'>
         <svg
+          className={visiblePopup ? 'rotated' : ''}
           width='10'
           height='6'
           viewBox='0 0 10 6'
