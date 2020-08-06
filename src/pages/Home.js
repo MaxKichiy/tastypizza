@@ -1,30 +1,39 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Categories, SortPopup, PizzaBlock } from '../components';
 import { connect } from 'react-redux';
 
 import { setCategory } from '../redux/actions/filters';
 
+const categoriesName = [
+  'Мясные',
+  'Вегетарианская',
+  'Гриль',
+  'Острые',
+  'Закрытые',
+];
+const sortItems = [
+  { name: 'популярности', type: 'popular' },
+  { name: 'цене', type: 'price' },
+  { name: 'алфавиту', type: 'alphabet' },
+];
+
 function Home(props) {
+  const onActiveIndex = useCallback((index) => {
+    props.onSetCategory(index);
+  }, []);
+
   return (
     <div className='container'>
       <div className='content__top'>
-        <Categories
-          onActiveIndex={(index) => props.onSetCategory(index)}
-          items={['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']}
-        />
-        <SortPopup
-          items={[
-            { name: 'популярности', type: 'popular' },
-            { name: 'цене', type: 'price' },
-            { name: 'алфавиту', type: 'alphabet' },
-          ]}
-        />
+        <Categories onActive={onActiveIndex} items={categoriesName} />
+        <SortPopup items={sortItems} />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
-        {props.items.map((element, index) => (
-          <PizzaBlock key={element.id} {...element} />
-        ))}
+        {props.items &&
+          props.items.map((element, index) => (
+            <PizzaBlock key={element.id} {...element} />
+          ))}
       </div>
     </div>
   );

@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 function App(props) {
   useEffect(() => {
     axios
-      .get('http://localhost:3000/db.json')
-      .then((res) => props.setPizzas(res.data.pizzas));
+      .get('http://localhost:3001/pizzas')
+      .then((res) => props.setPizzas(res.data));
   }, []);
   return (
     <div className='wrapper'>
