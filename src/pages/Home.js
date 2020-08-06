@@ -8,7 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchPizzas } from '../redux/actions/pizzas';
-import { setCategory } from '../redux/actions/filters';
+import { setCategory, setSortBy } from '../redux/actions/filters';
 
 const categoriesName = [
   'Мясные',
@@ -31,6 +31,9 @@ function Home() {
   const onActiveIndex = useCallback((index) => {
     dispatch(setCategory(index));
   }, []);
+  const onSelectSort = useCallback((type) => {
+    dispatch(setSortBy(type));
+  }, []);
 
   useEffect(() => {
     dispatch(fetchPizzas());
@@ -44,7 +47,11 @@ function Home() {
           onActive={onActiveIndex}
           items={categoriesName}
         />
-        <SortPopup items={sortItems} />
+        <SortPopup
+          onClickSortPopup={onSelectSort}
+          activeSortType={sortBy}
+          items={sortItems}
+        />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>

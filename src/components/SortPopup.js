@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
 const SortPopup = React.memo(function SortPopup(props) {
   const [visiblePopup, setVisiblePopup] = useState(false);
-  const [activeItem, setActiveItem] = useState(0);
+  // const [activeItem, setActiveItem] = useState(0);
   const sortRef = useRef();
-  const activeLabel = props.items[activeItem].name;
+  const activeLabel = props.items.find(
+    (obj) => obj.type === props.activeSortType
+  ).name;
 
   useEffect(() => {
     document.body.addEventListener('click', handleOutsideClick);
   }, []);
 
   const changeActiveFilter = (index) => {
-    setActiveItem(index);
+    props.onClickSortPopup(index);
     setVisiblePopup(false);
   };
   const toggleVisiblePopup = () => {
@@ -48,8 +51,10 @@ const SortPopup = React.memo(function SortPopup(props) {
           <ul>
             {props.items.map((element, index) => (
               <li
-                onClick={() => changeActiveFilter(index)}
-                className={activeItem === index ? 'active' : ''}
+                onClick={() => changeActiveFilter(element.type)}
+                className={
+                  props.activeSortType === element.type ? 'active' : ''
+                }
                 key={`${element.type}_${index}`}
               >
                 {element.name}
