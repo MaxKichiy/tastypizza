@@ -11,8 +11,8 @@ function PizzaBlock(props) {
   const onSelectType = (index) => {
     setActiveType(index);
   };
-  const onSelectSize = (index) => {
-    setActiveSize(index);
+  const onSelectSize = (size) => {
+    setActiveSize(size);
   };
 
   return (
@@ -37,8 +37,8 @@ function PizzaBlock(props) {
         <ul>
           {availableSizes.map((size, index) => (
             <li
-              key={index}
-              onClick={() => onSelectSize(index)}
+              key={`${size}_${index}`}
+              onClick={() => onSelectSize(size)}
               className={classNames({
                 active: activeSize === size,
                 disabled: !props.sizes.includes(size),

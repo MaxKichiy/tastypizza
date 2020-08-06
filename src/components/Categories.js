@@ -5,6 +5,7 @@ function Categories(props) {
 
   const onClickActive = (index) => {
     setActiveIndex(index);
+    props.onActiveIndex(index);
   };
   return (
     <div className='categories'>

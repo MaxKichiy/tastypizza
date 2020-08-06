@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Header } from './components';
 import { Home, Cart } from './pages';
 import { Route } from 'react-router';
-import { useEffect } from 'react';
+import { setPizzas as setPizzasAction } from './redux/actions/pizzas';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { setPizzas as setPizzasAction } from './redux/actions/pizzas';
 
 function App(props) {
   useEffect(() => {
@@ -18,18 +17,12 @@ function App(props) {
     <div className='wrapper'>
       <Header />
       <div className='content'>
-        <Route path='/' render={() => <Home items={props.items} />} exact />
+        <Route path='/' component={Home} exact />
         <Route path='/cart' component={Cart} exact />
       </div>
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    items: state.pizzas.items,
-  };
-};
 
 const mapDispatchToProp = (dispatch) => {
   return {
@@ -37,4 +30,4 @@ const mapDispatchToProp = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProp)(App);
+export default connect(null, mapDispatchToProp)(App);

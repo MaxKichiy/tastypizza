@@ -1,11 +1,15 @@
 import React from 'react';
 import { Categories, SortPopup, PizzaBlock } from '../components';
+import { connect } from 'react-redux';
+
+import { setCategory } from '../redux/actions/filters';
+
 function Home(props) {
   return (
     <div className='container'>
       <div className='content__top'>
         <Categories
-          onClick={(index) => console.log(index)}
+          onActiveIndex={(index) => props.onSetCategory(index)}
           items={['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']}
         />
         <SortPopup
@@ -26,4 +30,16 @@ function Home(props) {
   );
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    items: state.pizzas.items,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSetCategory: (index) => dispatch(setCategory(index)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
