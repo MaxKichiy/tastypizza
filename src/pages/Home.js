@@ -18,9 +18,9 @@ const categoriesName = [
   'Закрытые',
 ];
 const sortItems = [
-  { name: 'популярности', type: 'popular' },
-  { name: 'цене', type: 'price' },
-  { name: 'алфавиту', type: 'alphabet' },
+  { name: 'популярности', type: 'popular', order: 'desc' },
+  { name: 'цене', type: 'price', order: 'desc' },
+  { name: 'алфавиту', type: 'name', order: 'asc' },
 ];
 
 function Home() {
@@ -36,8 +36,8 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchPizzas());
-  }, [category]);
+    dispatch(fetchPizzas(category, sortBy));
+  }, [category, sortBy]);
 
   return (
     <div className='container'>
@@ -49,7 +49,7 @@ function Home() {
         />
         <SortPopup
           onClickSortPopup={onSelectSort}
-          activeSortType={sortBy}
+          activeSortType={sortBy.type}
           items={sortItems}
         />
       </div>

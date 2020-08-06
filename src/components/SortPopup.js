@@ -51,7 +51,7 @@ const SortPopup = React.memo(function SortPopup(props) {
           <ul>
             {props.items.map((element, index) => (
               <li
-                onClick={() => changeActiveFilter(element.type)}
+                onClick={() => changeActiveFilter(element)}
                 className={
                   props.activeSortType === element.type ? 'active' : ''
                 }
