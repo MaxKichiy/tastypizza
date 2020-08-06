@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Categories, SortPopup, PizzaBlock } from '../components';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setCategory } from '../redux/actions/filters';
 
@@ -18,8 +18,11 @@ const sortItems = [
 ];
 
 function Home(props) {
+  const items = useSelector((state) => state.pizzas.items);
+  const dispatch = useDispatch();
+
   const onActiveIndex = useCallback((index) => {
-    props.onSetCategory(index);
+    dispatch(setCategory(index));
   }, []);
 
   return (
@@ -30,8 +33,8 @@ function Home(props) {
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
-        {props.items &&
-          props.items.map((element, index) => (
+        {items &&
+          items.map((element, index) => (
             <PizzaBlock key={element.id} {...element} />
           ))}
       </div>
@@ -39,16 +42,4 @@ function Home(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    items: state.pizzas.items,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSetCategory: (index) => dispatch(setCategory(index)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

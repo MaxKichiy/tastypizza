@@ -5,13 +5,15 @@ import { Home, Cart } from './pages';
 import { Route } from 'react-router';
 import { setPizzas as setPizzasAction } from './redux/actions/pizzas';
 import axios from 'axios';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function App(props) {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     axios
       .get('http://localhost:3001/pizzas')
-      .then((res) => props.setPizzas(res.data));
+      .then((res) => dispatch(setPizzasAction(res.data)));
   }, []);
   return (
     <div className='wrapper'>
@@ -24,10 +26,4 @@ function App(props) {
   );
 }
 
-const mapDispatchToProp = (dispatch) => {
-  return {
-    setPizzas: (items) => dispatch(setPizzasAction(items)),
-  };
-};
-
-export default connect(null, mapDispatchToProp)(App);
+export default App;
