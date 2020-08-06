@@ -26,20 +26,24 @@ const sortItems = [
 function Home() {
   const items = useSelector((state) => state.pizzas.items);
   const isLoaded = useSelector((state) => state.pizzas.isLoaded);
+  const { category, sortBy } = useSelector(({ filters }) => filters);
   const dispatch = useDispatch();
-
   const onActiveIndex = useCallback((index) => {
     dispatch(setCategory(index));
   }, []);
 
   useEffect(() => {
     dispatch(fetchPizzas());
-  }, []);
+  }, [category]);
 
   return (
     <div className='container'>
       <div className='content__top'>
-        <Categories onActive={onActiveIndex} items={categoriesName} />
+        <Categories
+          activeCategory={category}
+          onActive={onActiveIndex}
+          items={categoriesName}
+        />
         <SortPopup items={sortItems} />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
@@ -48,7 +52,9 @@ function Home() {
           ? items.map((element, index) => (
               <PizzaBlock key={element.id} {...element} />
             ))
-          : Array(10).fill(<PizzaLoadingBlock />)}
+          : Array(10)
+              .fill(0)
+              .map((_, index) => <PizzaLoadingBlock key={index} />)}
       </div>
     </div>
   );
