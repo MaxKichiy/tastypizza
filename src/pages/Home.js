@@ -1,7 +1,13 @@
-import React, { useCallback } from 'react';
-import { Categories, SortPopup, PizzaBlock } from '../components';
+import React, { useCallback, useEffect } from 'react';
+import {
+  Categories,
+  SortPopup,
+  PizzaBlock,
+  PizzaLoadingBlock,
+} from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { fetchPizzas } from '../redux/actions/pizzas';
 import { setCategory } from '../redux/actions/filters';
 
 const categoriesName = [
@@ -17,12 +23,17 @@ const sortItems = [
   { name: 'алфавиту', type: 'alphabet' },
 ];
 
-function Home(props) {
+function Home() {
   const items = useSelector((state) => state.pizzas.items);
+  const isLoaded = useSelector((state) => state.pizzas.isLoaded);
   const dispatch = useDispatch();
 
   const onActiveIndex = useCallback((index) => {
     dispatch(setCategory(index));
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchPizzas());
   }, []);
 
   return (
@@ -33,10 +44,11 @@ function Home(props) {
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
-        {items &&
-          items.map((element, index) => (
-            <PizzaBlock key={element.id} {...element} />
-          ))}
+        {isLoaded
+          ? items.map((element, index) => (
+              <PizzaBlock key={element.id} {...element} />
+            ))
+          : Array(10).fill(<PizzaLoadingBlock />)}
       </div>
     </div>
   );
