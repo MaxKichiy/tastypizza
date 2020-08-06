@@ -4,7 +4,7 @@ function SortPopup(props) {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
   const sortRef = useRef();
-  const activeLabel = props.items[activeItem];
+  const activeLabel = props.items[activeItem].name;
 
   useEffect(() => {
     document.body.addEventListener('click', handleOutsideClick);
@@ -50,9 +50,9 @@ function SortPopup(props) {
               <li
                 onClick={() => changeActiveFilter(index)}
                 className={activeItem === index ? 'active' : ''}
-                key={`${element}_${index}`}
+                key={`${element.type}_${index}`}
               >
-                {element}
+                {element.name}
               </li>
             ))}
             {/* <li className='active'>популярности</li> */}
