@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 
 const SortPopup = React.memo(function SortPopup(props) {
   const [visiblePopup, setVisiblePopup] = useState(false);
